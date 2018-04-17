@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Lightning talk - Introduction to Stencil</title>
+
+		<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+		<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/dracula.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background="#ffffff">
+					<h1><img id="logo" src="img/stencil-logo.svg" /></h1>
+					<h4 id="lead-text">Fast, Reactive Web Components</h4>
+					<h6 style="margin-top: 2em; font-size: 1.5rem">André Gonçalves</h6>
+				</section>
+				<section>
+					<h2>Web Components</h2>
+					<p>&nbsp;</p>
+					<ul>
+						<li>Natively-supported, standardized JavaScript components</li>
+						<li>Reusable and encapsulated away from the rest of your code</li>
+						<li>Run in every framework or on their own</li>
+						<li>Answer to the shared-component problem</li>
+						<li>Native browser support: Chrome, Safari, good polyfills</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Web Components</h2>
+					<ul>
+						<li>Custom Elements</li>
+						<li>HTML Templates</li>
+						<li style="color: #666">Shadow DOM</li>
+						<li style="color: #666">HTML imports</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Custom Element Example</h2>
+					<pre><code data-trim data-noescape class="html">
+&lt;my-component size="large" theme="light"/&gt;&lt;/my-component&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>Custom Element Example</h2>
+					<pre><code data-trim data-noescape class="typescript">
+class MyComponent extends HTMLElement {
+	createdCallback() {
+		// Standard DOM/fetch/etc. code...
+	}
+	attachedCallback() {}
+	detachedCallback() {}
+	attributeChangedCallback() {}
+}
+
+document.registerElement('my-component', MyComponent);
+					</code></pre>
+				</section>
+				<section>
+					<h2>Making it easier to build Custom Elements</h2>
+					<ul>
+						<li>Framework features</li>
+						<li>Desire to manage bundles of components</li>
+						<li>Automatic Polyfilling when necessary</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Stencil: A Compiler for Web Components</h2>
+				</section>
+				<section>
+					<h2>What is Stencil?</h2>
+					<ul>
+						<li>A compiler that generates Custom Elements, part of the Web Components spec</li>
+						<li>Not a framework: output is 100% standards-compliant Custom Elements</li>
+						<li>Adds powerful framework features to Web Components</li>
+						<li>Created and used heavily by the Ionic Framework team. Ionic 4+ is built on it!</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Why?</h2>
+					<ul>
+						<li><b>Performance</b>: Traditional frameworks proving too heavy for demanding mobile Progressive Web Applications</li>
+						<li><b>Stability</b>: Desire to use web standards and avoid constant framework churn</li>
+						<li><b>Interoperability</b>: Ability to create components that work across all major frameworks.</li>
+						<li><b>Familiarity</b>: features from frameworks but in a leaner, standards-compliant package</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Example Stencil Component</h2>
+					<pre>
+						<code data-trim data-noescape class="typescript">
+						import { Component, Prop } from '@stencil/core';
+
+						@Component({
+						  tag: 'my-name',
+						  styleUrl: 'my-name.scss'
+						})
+						export class MyName {
+						  @Prop() name: string;
+
+						  render() {
+						    return (
+						      &lt;p&gt;
+						        Hello, my name is {this.name}
+						      &lt;/p&gt;
+						    );
+						  }
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Stencil-compiled Components have</h2>
+					<ul>
+						<li><b>Virtual DOM</b>: fast DOM updates without common DOM performance pitfalls</li>
+						<li><b>Lazy Loading</b>: By default components load asyncronously and can be bundled with related components</li>
+						<li><b>Reactivity</b>: Efficient updates based on property and state changes</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Stencil-compiled Components have (cont.)</h2>
+					<ul>
+						<li><b>High-performance Rendering</b>: async rendering system, similar to React Fiber</li>
+						<li><b>JSX</b>: Popular and familiar markup system pioneered by React</li>
+						<li><b>Server Side Rendering</b>: Hydrate pre-compiled components on the server without a headless browser</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Stencil API</h2>
+					<ul>
+						<li><b>@Component()</b>: set tag name and associated stylesheet (Sass or plain CSS)</li>
+						<li><b>@Prop()</b>: Create a property on the component</li>
+						<li><b>@State()</b>: local state that should be watched during change detection</li>
+						<li><b>@Event()</b>: Trigger events on a component</li>
+						<li><b>@Listen()</b>: listen for events fired from children</li>
+						<li><b>@Element()</b>: grab the DOM element for this component</li>
+					</ul>
+				</section>
+				<section>
+						<h2>Example Stencil Component</h2>
+						<pre>
+							<code data-trim data-noescape class="typescript" style="max-height: 600px">
+									import { State } from '@stencil/core';
+
+									...
+									export class TodoList {
+									  @State() completedTodos: Todo[];
+									
+									  completeTodo(todo: Todo) {
+										this.completedTodos.push(todo);
+									  }
+
+									  render() {
+									    return (
+									      &lt;div&gt;
+									        {this.todos.map((todo) =>
+									          &lt;div&gt;
+									            &lt;div&gt;{todo.taskName}&lt;/div&gt;
+									            &lt;div&gt;{todo.isCompleted}&lt;/div&gt;
+									          &lt;/div&gt;
+									        )}
+									      &lt;/div&gt;
+									    )
+									  }
+									}
+						</code></pre>
+					</section>
+				<section>
+					<h2>How is Stencil different from X?</h2>
+					<ul>
+						<li><b>Angular/React/Vue/etc.</b>: Stencil builds standards-based web components that run natively in the browser.</li>
+						<li><b>Polymer</b>: Stencil works primarily at build rather than runtime. Outputs vanilla web components. Opinionated around JSX, Virtual DOM, and other framework features.</li>
+						<li><b>Vanilla Web Components</b>: Stencil provides complicated framework features as if you wrote them yourself in vanilla Web Components.</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Questions?</h2>
+					<ul>
+						<li>Andre</li>
+						<li>@andregoncalves</li>
+						<li>github.com/andregoncalves</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
